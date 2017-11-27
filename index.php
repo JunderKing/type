@@ -6,7 +6,7 @@ echo json_encode($result);
 
 class Index {
     private $serverName = '127.0.0.1';
-    private $userName = 'myuser';
+    private $userName = 'root';
     private $passwd = 'youxiwang';
     private $conn;
 
@@ -41,9 +41,9 @@ class Index {
             'errno' => $errno,
         );
     }
-    
+
     public function updPhrase() {
-        $paramArr = $this->getParam(array('userId', 'phraseId', 'spendTime', 'isCorrect'));
+        $paramArr = $this->getParam(array('phraseId', 'spendTime', 'isCorrect'));
         extract($paramArr);
 
         //更新当前词组
@@ -54,10 +54,33 @@ class Index {
         $sql .= " WHERE id=$phraseId";
         $result = mysqli_query($this->conn, $sql);
 
+        return array(
+            'errno' => 0
+        );
+    }
+    
+    public function getPhrase() {
+        $paramArr = $this->getParam(array('userId', 'phraseId', 'spendTime', 'isCorrect'));
+        extract($paramArr);
+
+        //更新当前词组
+        $sql = "UPDATE tp_phrase SET complete_count=complete_count+1, in_buffer=0";
+        if (!$isCorrect) {
+            $sql .= ', error_count=error_count+1';
+        }
+        $sql .= " WHERE id=$phraseId";
+        $result = mysqli_query($this->conn, $sql);
+
         //获取新词组
-        $sql = "SELECT * FROM tp_phrase WHERE user_id=$userId ORDER BY complete_count, updated_at LIMIT 1";
+        $sql = "SELECT * FROM tp_phrase WHERE user_id=$userId AND in_buffer=0 ORDER BY complete_count, updated_at LIMIT 1";
         $result = mysqli_query($this->conn, $sql);
         $resArr = mysqli_fetch_assoc($result);
+
+        //更新当前词组为inBuffer
+        $phraseId = $resArr['id'];
+        $sql = "UPDATE tp_phrase SET in_buffer=1 WHERE id=$phraseId";
+        $result = mysqli_query($this->conn, $sql);
+
         return array(
             'errno' => 0,
             'data' => $resArr

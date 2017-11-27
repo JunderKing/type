@@ -4,7 +4,7 @@ var app = new Vue({
         userId: 1,
         phraseId: 1,
         phraseArr: [
-            {id: 1, phrase: 'Where there is will there is a way!'},
+            {id: 1, phrase: 'Where there is a will there is a way!'},
             {id: 2, phrase: 'mysql -uroot -p'},
         ],
         blinkShow: false,
@@ -50,7 +50,7 @@ var app = new Vue({
             formData.append('secondClass', this.newItem.secondClass);
             formData.append('thirdClass', this.newItem.thirdClass);
             formData.append('level', this.newItem.level);
-            this.$http.post('/type/index.php?action=addPhrase', formData).then(res => {
+            this.$http.post('/typing/index.php?action=addPhrase', formData).then(res => {
                 var resJson = res.body;
                 console.log(resJson);
             }, err => {
@@ -97,7 +97,7 @@ var app = new Vue({
                 formData.append('isCorrect', this.isCorrect);
                 formData.append('spendTime', Date.parse(new Date())- this.startTime);
                 var that = this;
-                this.$http.post('/type/index.php?action=updPhrase', formData).then(res => {
+                this.$http.post('/typing/index.php?action=getPhrase', formData).then(res => {
                     var resObj = res.body;
                     if (resObj.errno == 0) {
                         that.phraseArr.push(resObj.data);
