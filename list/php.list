@@ -1,1 +1,19 @@
- 3 | php | 内置函数 | - | 
+ 3 | php | syntax | expression | $value ?: $default | 简写的三元表达式，php5.3起
+ 3 | php | function | array | array($key => $value) | 创建数组
+ 3 | php | function | array | count($array) | 计算并返回数组元素个数或对象属性个数
+ 3 | php | function | array | range($start, $end[, $step = 1]) | 创建一个指定范围的数组，包含$start和$end
+ 3 | php | function | array | array_pad($array, $length, $value) | 以指定长度将一个值填充进数组
+ 3 | php | function | array | array_fill($start, $count, $value) | 使用给定的值填充成数组
+ 3 | php | function | array | array_fill_keys($keyArr, $value) | 使用给定的键和值填充成数组
+ 3 | php | function | array | array_combine($keyArr, $valueArr) | 一个数组为key，一个数组为value组合新数组
+ 3 | php | function | array | compact($varName1[, ...]) | 使用给定的值填充成数组
+ 3 | php | function | array | extract($array[, ...]) | 将数组按变量导出
+ 3 | php | function | array | list($var1[, $var2 ...]) = array($value1[, $value2 ...]) | 将数组数组的值一次赋给变量
+ 4 | php | function | array | array_keys($array[, $search_value = null, $strict = false]) | 返回数组中部分或所有key组成的indexed数组
+ 4 | php | function | array | array_values($array) | 返回数组中所有value组成的indexed数组
+ 3 | php | function | array | array_unique($array[, $sortFlag]) | 返回删除重复值后的新数组
+ 3 | php | function | array | array_column($array, $columnKey[, $indexKey = null]) | 返回数组中指定的一列
+ 3 | php | function | array | array_merge($array1[, $array2 ...]) | 合并一个或多个数组
+ 3 | php | function | array | array_merge_recursive($array1[, $array2 ...]) | 递归合并一个或多个数组
+ 3 | php | function | array | array_push($array, $value1[, $value2]]) | 合并一个或多个数组
+
