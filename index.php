@@ -6,7 +6,7 @@ echo json_encode($result);
 
 class Index {
     private $serverName = '127.0.0.1';
-    private $userName = 'myuser';
+    private $userName = 'root';
     private $passwd = 'youxiwang';
     private $conn;
 

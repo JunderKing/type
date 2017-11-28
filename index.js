@@ -76,21 +76,23 @@ var app = new Vue({
                 (event.keyCode>=186&&event.keyCode<=192) ||
                 (event.keyCode>=219&&event.keyCode<=222))
             {} else { return; }
-            //移动光标，标记错误
+            //移动光标
             if(event.key == this.phraseArr[0].phrase.split('')[this.curIndex]){
                 this.curIndex++;
+                //使光标重新闪动
+                this.blinkShow = true;
+                clearInterval(this.timerId);
+                var that = this;
+                this.timerId = setInterval(function(){
+                    that.blinkShow = that.blinkShow ? false : true;
+                }, 500);
             } else {
+                //标记错误
                 this.isCorrect = 0;
-                this.errIndexArr.push(this.curIndex);
-                this.curIndex++;
+                if (this.errIndexArr[this.errIndexArr.length-1] !== this.curIndex) {
+                    this.errIndexArr.push(this.curIndex);
+                }
             }
-            //使光标重新闪动
-            this.blinkShow = true;
-            clearInterval(this.timerId);
-            var that = this;
-            this.timerId = setInterval(function(){
-                that.blinkShow = that.blinkShow ? false : true;
-            }, 500);
             //如果是最后一个字母则更换词组
             if(this.curIndex >= this.phraseArr[0].phrase.length) {
                 this.curIndex = 0;
