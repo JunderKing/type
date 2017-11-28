@@ -11,6 +11,10 @@
     <body>
         <div id="app" class="wrapper">
             <div class="container">
+                <div>
+                    <span>Speed: {{speed}}</span>
+                    <span>Errors: {{errorCount}}</span>
+                </div>
                 <div class="text_area" :class="{blink: blinkShow}" tabindex="1" v-on:keydown="check($event)" v-on:focus="start" v-on:blur="finish">
                     <span :class="{ current: curIndex==index, error: errIndexArr.indexOf(index)!=-1, is_space: letter==' ' }" v-for="(letter, index) in phraseArr[0].phrase.split('')">{{letter==' ' ? '␣': letter}}</span>
                 </div>

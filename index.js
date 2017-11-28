@@ -8,6 +8,8 @@ var app = new Vue({
             {id: 1, phrase: 'Where there is a will there is a way!'},
             {id: 2, phrase: 'mysql -uroot -p'},
         ],
+        speed: 0,
+        errorCount: 0,
         blinkShow: false,
         curIndex: 0,
         errIndexArr: [],
@@ -61,7 +63,8 @@ var app = new Vue({
 
         check: function(event){
             if(this.curIndex == 0) {
-                this.startTime = Date.parse(new Date());
+                //this.startTime = Date.parse(new Date());
+                this.startTime = new Date().getTime();
                 this.isCorrect = true;
             }
             //无视控制键
@@ -90,42 +93,47 @@ var app = new Vue({
             }, 500);
             //如果是最后一个字母则更换词组
             if(this.curIndex >= this.phraseArr[0].phrase.length) {
+                this.curIndex = 0;
+                var curPhrase = this.phraseArr.shift();
+                var spendTime = new Date().getTime() - this.startTime;
+                var wordLength = curPhrase.phrase.length;
+                this.speed = Math.round(wordLength * 60 * 1000 / spendTime);
+                this.errorCount = this.errIndexArr.length;
+                this.errIndexArr = [];
+
                 if (this.errIndexArr.length == 0) {
                     //如果没有错误，则获取新词组
-                    this.curIndex = 0;
-                    var curPhrase = this.phraseArr.shift();
                     var formData = new FormData();
                     formData.append('userId', this.userId);
                     formData.append('phraseId', curPhrase.id);
                     formData.append('isCorrect', this.isCorrect);
-                    formData.append('spendTime', Date.parse(new Date())- this.startTime);
+                    formData.append('speed', this.speed);
                     var that = this;
                     this.$http.post('/typing/index.php?action=getPhrase', formData).then(res => {
                         var resObj = res.body;
                         if (resObj.errno == 0) {
                             that.phraseArr.push(resObj.data);
                         }
-                        console.log(resObj);
+                        console.log('getPhrase');
+                        console.log(that.phraseArr);
                     }, err => {
                         console.log('error');
                     });
                 } else {
                     //如果有错误，则更新词组状态
-                    this.curIndex = 0;
-                    this.errIndexArr = [];
-                    var curPhrase = this.phraseArr.shift();
                     this.phraseArr.push(curPhrase);
                     var formData = new FormData();
                     formData.append('phraseId', curPhrase.id);
                     formData.append('isCorrect', this.isCorrect);
-                    formData.append('spendTime', Date.parse(new Date())- this.startTime);
+                    formData.append('speed', this.speed);
                     var that = this;
                     this.$http.post('/typing/index.php?action=updPhrase', formData).then(res => {
                         var resObj = res.body;
                         if (resObj.errno == 0) {
                             console.log('update success');
-                            that.phraseArr.push(resObj.data);
                         }
+                        console.log('updPhrase');
+                        console.log(that.phraseArr);
                     }, err => {
                         console.log('error');
                     });

@@ -6,7 +6,7 @@ echo json_encode($result);
 
 class Index {
     private $serverName = '127.0.0.1';
-    private $userName = 'root';
+    private $userName = 'myuser';
     private $passwd = 'youxiwang';
     private $conn;
 
@@ -43,7 +43,7 @@ class Index {
     }
 
     public function updPhrase() {
-        $paramArr = $this->getParam(array('phraseId', 'spendTime', 'isCorrect'));
+        $paramArr = $this->getParam(array('phraseId', 'speed', 'isCorrect'));
         extract($paramArr);
 
         //更新当前词组
@@ -60,11 +60,12 @@ class Index {
     }
     
     public function getPhrase() {
-        $paramArr = $this->getParam(array('userId', 'phraseId', 'spendTime', 'isCorrect'));
+        $paramArr = $this->getParam(array('userId', 'phraseId', 'speed', 'isCorrect'));
         extract($paramArr);
 
         //更新当前词组
-        $sql = "UPDATE tp_phrase SET complete_count=complete_count+1, in_buffer=0";
+        $curTime = time();
+        $sql = "UPDATE tp_phrase SET speed=$speed, complete_count=complete_count+1, in_buffer=0, updated_at=$curTime";
         if (!$isCorrect) {
             $sql .= ', error_count=error_count+1';
         }
@@ -72,7 +73,7 @@ class Index {
         $result = mysqli_query($this->conn, $sql);
 
         //获取新词组
-        $sql = "SELECT * FROM tp_phrase WHERE user_id=$userId AND in_buffer=0 ORDER BY complete_count, updated_at LIMIT 1";
+        $sql = "SELECT * FROM tp_phrase WHERE user_id=$userId AND in_buffer=0 ORDER BY updated_at LIMIT 1";
         $result = mysqli_query($this->conn, $sql);
         $resArr = mysqli_fetch_assoc($result);
 
