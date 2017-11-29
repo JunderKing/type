@@ -8,6 +8,9 @@ var app = new Vue({
             {id: 1, phrase: 'Where there is a will there is a way!'},
             {id: 2, phrase: 'mysql -uroot -p'},
         ],
+        codeArr: [
+            {id: 1, phrase: ''}
+        ],
         speed: 0,
         errorCount: 0,
         blinkShow: false,
