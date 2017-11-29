@@ -12,7 +12,7 @@
         <div id="app" class="wrapper">
             <div class="container">
                 <div>
-                    <span>Speed: {{speed}}</span>
+                    <span>Speed: {{speed}}kpm </span>
                     <span>Errors: {{errorCount}}</span>
                 </div>
                 <div class="text_area" :class="{blink: blinkShow}" tabindex="1" v-on:keydown="check($event)" v-on:focus="start" v-on:blur="finish">
