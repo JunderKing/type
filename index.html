@@ -18,22 +18,6 @@
                 <div class="text_area" :class="{blink: blinkShow}" tabindex="1" v-on:keydown="check($event)" v-on:focus="start" v-on:blur="finish">
                     <span :class="{ current: curIndex==index, error: errIndexArr.indexOf(index)!=-1, is_space: letter==' ' }" v-for="(letter, index) in phraseArr[0].phrase.split('')">{{letter==' ' ? '␣': letter}}</span>
                 </div>
-                <pre>
-                    <ol>
-                        <li>class Index{</li>
-                        <li>    public function __construct(){</li>
-                        <li>        echo 'Hello world!'</li>
-                        <li>    }</li>
-                        <li>}</li>
-                    </ol>
-                </pre>
-                <code>
-                    class Index{
-                        public static say() {
-                            echo 'hello world!';
-                        }
-                    }
-                </code>
                 <!--<div class="form">-->
                     <!--<table>-->
                         <!--<tr>-->

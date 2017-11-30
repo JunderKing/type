@@ -5,8 +5,8 @@ var app = new Vue({
         userId: 1,
         phraseId: 1,
         phraseArr: [
-            {id: 1, phrase: 'Where there is a will there is a way!'},
-            {id: 2, phrase: 'mysql -uroot -p'},
+            {id: 1, phrase: 'a'},
+            {id: 2, phrase: 'b'},
         ],
         codeArr: [
             {id: 1, phrase: ''}
@@ -106,24 +106,13 @@ var app = new Vue({
                 this.errorCount = this.errIndexArr.length;
                 this.errIndexArr = [];
 
-                if (this.errIndexArr.length == 0) {
+                if (true || this.errIndexArr.length == 0) {
                     //如果没有错误，则获取新词组
-                    var formData = new FormData();
-                    formData.append('userId', this.userId);
-                    formData.append('phraseId', curPhrase.id);
-                    formData.append('isCorrect', this.isCorrect);
-                    formData.append('speed', this.speed);
-                    var that = this;
-                    this.$http.post('/typing/index.php?action=getPhrase', formData).then(res => {
-                        var resObj = res.body;
-                        if (resObj.errno == 0) {
-                            that.phraseArr.push(resObj.data);
-                        }
-                        console.log('getPhrase');
-                        console.log(that.phraseArr);
-                    }, err => {
-                        console.log('error');
-                    });
+                    if (false) {
+                        this.getNewPhrase(curPhrase);
+                    } else {
+                        this.getRandNum();
+                    }
                 } else {
                     //如果有错误，则更新词组状态
                     this.phraseArr.push(curPhrase);
@@ -144,6 +133,32 @@ var app = new Vue({
                     });
                 }
             }
+        },
+
+        getRandNum: function() {
+            console.log('getRandNum');
+            var randInt = Math.floor(Math.random() * 1000);
+            var ipString = Math.floor(Math.random() * 10000) + '.' + Math.floor(Math.random() * 10000) + '.' + Math.floor(Math.random() * 10000) + '.' + Math.floor(Math.random() * 10000);
+            this.phraseArr.push({id: 1, phrase: ipString});
+        },
+
+        getNewPhrase: function(curPhrase) {
+            var formData = new FormData();
+            formData.append('userId', this.userId);
+            formData.append('phraseId', curPhrase.id);
+            formData.append('isCorrect', this.isCorrect);
+            formData.append('speed', this.speed);
+            var that = this;
+            this.$http.post('/typing/index.php?action=getPhrase', formData).then(res => {
+                var resObj = res.body;
+                if (resObj.errno == 0) {
+                    that.phraseArr.push(resObj.data);
+                }
+                console.log('getPhrase');
+                console.log(that.phraseArr);
+            }, err => {
+                console.log('error');
+            });
         }
     }
 })
