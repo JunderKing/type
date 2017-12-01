@@ -1,0 +1,3 @@
+ 3 | eeo | syntax | expression | LogLogic::writeLog($exception, $_POST, $rtn['code']) | 旧式log
+ 3 | eeo | syntax | expression | LogHandler::log($string, $array, __FILE__, __LINE__) | 新式log
+ 3 | eeo | word | - | saasajax | 新ajax目录

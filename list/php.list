@@ -1,4 +1,23 @@
- 3 | php | syntax | expression | $value ?: $default | 简写的三元表达式，php5.3起
+ 3 | php | words | - | include_once require_once | 引入文件，成功则返回引入文件return的值或者int1，否则返回false
+ 3 | php | words | - | $_SERVER['HTTP_CLIENT_IP'] | 获取客户端ip地址，可伪造
+ 3 | php | words | - | $_SERVER['HTTP_X_FORWARDED_FOR'] | 获取客户端ip地址，可伪造
+ 3 | php | words | - | $_SERVER['REMOTE_ADDR'] | 获取客户端ip地址，不可伪造，可能是代理服务器或者分发服务器ip
+ 3 | php | words | - | $_SERVER['HTTP_REFERER'] | 带HTTP的都有可能被伪造
+ 3 | php | expression | - | date('Y-m-d',strtotime('-1 day')) | 获取前一天的时间戳
+ 3 | php | expression | - | $value ?: $default; | 简写的三元表达式，php5.3起
+ 3 | php | expression | - | header('Location: /login.php'); | 简写的三元表达式，php5.3起
+ 3 | php | expression | - | set_include_path(get_include_path() . PATH_SEPARATOR . $path); | 动态设置inclue_path的配置选项
+ 3 | php | function | - | session_start($options = []); session_destroy(); | 启用或重用会话；销毁回话
+ 3 | php | expression | - | $_SESSION['foo'] = 'bar'; unset($_SESSION['foo']); $_SESSION = array(); | 设置、删除和清空会话
+ 3 | php | function | - | setcookie($name, $value = '', $expire = 0, $path = '', $domain = '', $secure = false, $httponly = false) | 设置cookie
+ 3 | php | expression | - | file_get_contents(php://input) | 获取原始请求数据
+
+
+ 3 | php | function | io | header($string, $replace = true, $http_response_code) | 发送原生的http头部，必须位于任何输出之前
+ 3 | php | function | other | define($name, $value, $case_insensitive = false) | 定义常量
+ 3 | php | function | spl | spl_autoload_register($callable, $throw = true, $prepend = false) | 注册__autoload的函数实现，参数可以是类名加函数名数组、匿名函数
+ 3 | php | function | handle | func_get_args() | 返回包含函数参数的列表
+ 3 | php | function | date | date_default_timezone_set('RPC') | 设置默认时区
  3 | php | function | array | array($key => $value) | 创建数组
  3 | php | function | array | count($array) | 计算并返回数组元素个数或对象属性个数
  3 | php | function | array | range($start, $end, $step = 1) | 创建一个指定范围的数组，包含$start和$end
@@ -7,7 +26,7 @@
  3 | php | function | array | array_fill_keys($keyArr, $value) | 使用给定的键和值填充成数组
  3 | php | function | array | array_combine($keyArr, $valueArr) | 一个数组为key，一个数组为value组合新数组
  3 | php | function | array | compact(*$varName) | 使用给定的值填充成数组
- 3 | php | function | array | extract($array, #param) | 将数组按变量导出
+ 3 | php | function | array | extract(&$array, $flag = EXTRA_OVERWRITE, $prefix = NULL) | 将数组按变量导出
  3 | php | function | array | list(*$var) = array(*$value) | 将数组数组的值一次赋给变量
  4 | php | function | array | array_keys($array, $search_value = null, $strict = false) | 返回数组中部分或所有key组成的indexed数组
  4 | php | function | array | array_values($array) | 返回数组中所有value组成的indexed数组
