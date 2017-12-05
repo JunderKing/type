@@ -1,1 +1,2 @@
  3 | linux | command | - | cat head tail less more | 查看文件
+ 3 | linux | command | - | curl ifconfig.me | 查看外网ip
