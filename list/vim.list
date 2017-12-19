@@ -1,1 +1,3 @@
  5 | vim | command | - | "0p | 粘贴复制的内容
+ 5 | vim | command | - | :set fu | vim全屏
+ 5 | vim | command | - | :set nofu | 退出vim全屏
