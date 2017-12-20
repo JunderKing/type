@@ -41,6 +41,7 @@ class HttpController {
         $this->openId = $postObj->FromUserName;
         $this->myName = $postObj->ToUserName;
         $this->input = trim($postObj->Content);
+        $bgIndex = (int)substr((int)$this->input, -4);
     }
 
     public function getUserInfo() {
@@ -96,6 +97,10 @@ class ImageController{
     private $avatarDiam = 110;
     private $avatarPosX = 220;
     private $avatarPosY = 220;
+    //private $textMaxHeight = 20;
+    private $textTopY = 500;
+    private $textMaxWidth = 100;
+    private $textCenterX = 100;
 
     public function index($bgUrl = './demo.jpeg', $avatarUrl = './avatar.jpg', $nickname = '🌞🔥Jun.K') {
         $startTime = microtime(true);
@@ -185,24 +190,18 @@ class ImageController{
     // 添加文字
     public function addText($bgUrl, $text) {
         $font_size = 18; //字体大小 14px
-        //$text = '有朋自远方来。不亦乐呼'; 
-        //$text = '🌞🔥依一哥';
         $text = mb_convert_encoding($text, 'utf8mb4');
         $font = './msyhbd.ttf'; 
-        //$font = iconv("UTF-8", "gb2312", $font);
         $fontarea = imagettfbbox($font_size, 0, $font, $text); //确定会变化的字符串的位置
-        //$text_width = $fontarea[2] - $fontarea[0] + ($font_size/3); //字符串文本框长度
         $textWidth = $fontarea[2] - $fontarea[0];
-        //$text_height = $fontarea[1] - $fontarea[7] + ($font_size/3); ////字符串文本框高度
         $textHeight = $fontarea[1] - $fontarea[7];
-        //$im = imagecreate($textWidth, $textHeight); 
         $im = imagecreatefromjpeg($bgUrl);
         $whiteColor = imagecolorallocate($im, 255, 255, 255); //定义透明色
         $textColor = imagecolorallocate($im, 0, 0, 0);  //文本色彩
-        ////imagettftext($im, $font_size, 0, 0, $text_height - ($font_size/2.5) ,$textColor ,$font ,$text); 
-        imagettftext($im, $font_size, 0, 0, $text_height, $textColor, $font, $text); 
-        //imagecolortransparent($im, $whiteColor);
-        $filename = './outpub.png';
+        $textPosX = $this->textCenterX - $textWidth / 2;
+        $textPosY = $this->textTopY - $textHeight;
+        imagettftext($im, $font_size, 0, $textPosX, $textPosY, $textColor, $font, $text); 
+        $filename = './output.png';
         imagepng($im, $filename); 
         imagedestroy($im); 
         return $filename;
