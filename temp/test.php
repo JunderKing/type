@@ -1,4 +1,10 @@
 <?php
+//http请求方式：POST/FORM，使用https
+//https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE
+//调用示例（使用curl命令，用FORM表单方式上传一个多媒体文件）：
+//curl -F media=@test.jpg "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE"
+
+exit;
 function generateImg($source, $text1, $text2, $text3, $font = './msyhbd.ttf') {
     $date = '' . date ( 'Ymd' ) . '/';
     $img = $date . md5 ( $source . $text1 . $text2 . $text3 ) . '.jpg';
